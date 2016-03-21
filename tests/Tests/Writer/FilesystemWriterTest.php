@@ -14,11 +14,11 @@ namespace Alchemy\Resource\Tests\Writer;
 use Alchemy\Resource\Reader\StreamReader;
 use Alchemy\Resource\Reader\StringReader;
 use Alchemy\Resource\ResourceUri;
-use Alchemy\Resource\Writer\StreamWriter;
+use Alchemy\Resource\Writer\FilesystemWriter;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
-class StreamWriterTest extends \PHPUnit_Framework_TestCase
+class FilesystemWriterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var vfsStreamDirectory
@@ -38,7 +38,7 @@ class StreamWriterTest extends \PHPUnit_Framework_TestCase
         $resource = ResourceUri::fromString($uri);
 
         $reader = new StringReader('mock data');
-        $writer = new StreamWriter();
+        $writer = new FilesystemWriter();
 
         $writer->writeFromReader($reader, $resource);
 
@@ -49,30 +49,4 @@ class StreamWriterTest extends \PHPUnit_Framework_TestCase
         unset($streamReader);
     }
 
-    public function testWritingToInaccessibleStreamTriggersError()
-    {
-        $reader = new StringReader('mock data');
-        $writer = new StreamWriter();
-
-        $this->setExpectedException(\RuntimeException::class);
-
-        // php://input is read-only
-        $writer->writeFromReader($reader, ResourceUri::fromString('alchemy-unknown://unknown-resource'));
-    }
-
-    public function testWritingToReadOnlyStreamTriggersError()
-    {
-        if (defined('HHVM_VERSION')) {
-            // HHVM ignores the use of error suppression operator
-            $this->markTestSkipped('Test relies on unsupported HHVM behavior');
-        }
-
-        $reader = new StringReader('mock data');
-        $writer = new StreamWriter();
-
-        $this->setExpectedException(\RuntimeException::class);
-
-        // php://input is read-only
-        $writer->writeFromReader($reader, ResourceUri::fromString('php://input'));
-    }
 }

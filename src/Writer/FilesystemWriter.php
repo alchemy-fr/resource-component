@@ -24,6 +24,6 @@ class FilesystemWriter implements ResourceWriter
      */
     public function writeFromReader(ResourceReader $reader, ResourceUri $target)
     {
-        file_put_contents($target->getResource(), $reader->getContentsAsStream());
+        file_put_contents($target->getUri(), $reader->getContentsAsStream());
     }
 }
