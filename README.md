@@ -6,7 +6,7 @@ and resource read/write access
 
 ## Installation
 
-The only supported installation method is via [Composer](https://getcomposer.org). Run the following command to require Zippy in your project:
+The only supported installation method is via [Composer](https://getcomposer.org). Run the following command to require the package in your project:
 
 ```
 composer require alchemy/resource-component
