@@ -23,3 +23,6 @@ before_script:
 
 script:
   - make test
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover build/coverage.clover
+  - make clean
