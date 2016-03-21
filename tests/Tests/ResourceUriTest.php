@@ -200,4 +200,16 @@ class ResourceUriTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($uris[0], (string) $resources[0]);
         $this->assertEquals($uris[1], (string) $resources[1]);
     }
+
+    public function testCreatingFromStringArrayWithInvalidValuesTriggersError()
+    {
+        $uris = [
+            'test::/first-resource',
+            '://second-resource'
+        ];
+
+        $this->setExpectedException(\InvalidArgumentException::class);
+
+        $resources = array_values(ResourceUri::fromStringArray($uris));
+    }
 }

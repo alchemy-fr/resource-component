@@ -46,10 +46,10 @@ class StreamReader implements ResourceReader
      */
     public function getContentsAsStream()
     {
-        $stream = @fopen($this->resource, 'r');
+        $stream = @fopen($this->resource->getUri(), 'r');
 
         if ($stream === false) {
-            throw new \RuntimeException('Unable to open stream resource for ' . $this->resource);
+            throw new \RuntimeException('Unable to open ' . $this->resource->getUri() . ' for reading');
         }
 
         $this->streams[] = $stream;

@@ -23,15 +23,16 @@ class StreamWriter implements ResourceWriter
      */
     public function writeFromReader(ResourceReader $reader, ResourceUri $target)
     {
-        $targetResource = @fopen(rawurldecode($target->getResource()), 'w+');
+        $targetResource = @fopen($target->getUri(), 'w+', true);
 
-        if ($targetResource === false) {
+        if (! is_resource($targetResource)) {
             throw new \RuntimeException('Unable to open ' . $target->getUri() . ' for writing');
         }
 
         $sourceResource = $reader->getContentsAsStream();
+        $bytesCopied = @stream_copy_to_stream($sourceResource, $targetResource);
 
-        if (@stream_copy_to_stream($sourceResource, $targetResource) === 0) {
+        if ($bytesCopied <= 0) {
             throw new \RuntimeException('Unable to write to ' . $target->getUri());
         };
 
