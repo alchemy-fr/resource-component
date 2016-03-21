@@ -20,9 +20,7 @@ matrix:
 before_script:
   - composer update --no-interaction $PREFER_LOWEST
   - if [ -n "$PREFER_LOWEST" ];then composer update phpunit/phpunit --prefer-source --no-interaction --with-dependencies;fi
-
 script:
   - make test
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover build/coverage.clover
+  - if [ $(phpenv version-name) = 'hhvm' ]; then echo 'No coverage available in env'; else make scrutinizer; fi
   - make clean

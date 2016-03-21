@@ -5,3 +5,8 @@ test:
 
 clean:
 	rm -rf build/
+	rm -rf ocular.php
+
+scrutinizer:
+	wget https://scrutinizer-ci.com/ocular.phar
+	php ocular.phar code-coverage:upload --format=php-clover build/coverage.clover
