@@ -17,6 +17,7 @@ use Alchemy\Resource\ResourceWriter;
 
 class StreamWriter implements ResourceWriter
 {
+
     /**
      * @param ResourceReader $reader
      * @param ResourceUri $target

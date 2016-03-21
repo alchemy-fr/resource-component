@@ -42,6 +42,11 @@ class StreamWriterTest extends \PHPUnit_Framework_TestCase
 
     public function testWritingToReadOnlyStreamTriggersError()
     {
+        if (defined('HHVM_VERSION')) {
+            // HHVM ignores the use of error suppression operator
+            $this->markTestSkipped('Test relies on unsupported HHVM behavior');
+        }
+
         $reader = new StringReader('mock data');
         $writer = new StreamWriter();
 
