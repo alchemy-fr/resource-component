@@ -1,5 +1,4 @@
 # resource-component
-Resource component
 
 alchemy/resource-component is a simple library providing an abstraction over resources, resource metadata, 
 and resource read/write access
