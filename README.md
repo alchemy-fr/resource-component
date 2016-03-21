@@ -1,5 +1,7 @@
 # resource-component
 
+[![Travis](https://img.shields.io/travis/alchemy-fr/resource-component.svg?style=flat-square)](https://travis-ci.org/alchemy-fr/resource-component)
+
 alchemy/resource-component is a simple library providing an abstraction over resources, resource metadata, 
 and resource read/write access
 
