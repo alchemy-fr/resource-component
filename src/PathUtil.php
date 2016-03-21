@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Zippy.
+ * This file is part of alchemy/resource-component.
  *
  * (c) Alchemy <info@alchemy.fr>
  *
