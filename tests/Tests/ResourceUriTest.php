@@ -154,4 +154,50 @@ class ResourceUriTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('file://path', (string) $resourceUri);
     }
+
+    public function getUrisForEqualityComparaison()
+    {
+        return [
+            [ 'test://equals', 'test://equals', true ],
+            [ 'test://equals', 'test://not-equals', false ]
+        ];
+    }
+
+    /**
+     * @dataProvider getUrisForEqualityComparaison
+     * @param string $lhsUri
+     * @param string $rhsUri
+     * @param bool $expectedResult
+     */
+    public function testEqualsMatchesEquivalentUris($lhsUri, $rhsUri, $expectedResult)
+    {
+        $lhs = ResourceUri::fromString($lhsUri);
+        $rhs = ResourceUri::fromString($rhsUri);
+
+        $this->assertEquals((bool) $expectedResult, $lhs->equals($rhs));
+        $this->assertEquals((bool) $expectedResult, $rhs->equals($lhs));
+    }
+
+    public function testCreatingFromProtocolAndResourceCreatesCorrectResource()
+    {
+        $protocol = 'test';
+        $resource = 'test-resource';
+
+        $uri = ResourceUri::fromProtocolAndResource($protocol, $resource);
+
+        $this->assertEquals('test://test-resource', (string) $uri);
+    }
+
+    public function testCreatingFromStringArrayReturnsArrayOfResources()
+    {
+        $uris = [
+            'test://first-resource',
+            'test://second-resource'
+        ];
+
+        $resources = array_values(ResourceUri::fromStringArray($uris));
+
+        $this->assertEquals($uris[0], (string) $resources[0]);
+        $this->assertEquals($uris[1], (string) $resources[1]);
+    }
 }

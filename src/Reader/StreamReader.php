@@ -42,22 +42,14 @@ class StreamReader implements ResourceReader
     }
 
     /**
-     * @return string
-     */
-    public function getContents()
-    {
-        return stream_get_contents($this->getContentsAsStream());
-    }
-
-    /**
      * @return resource
      */
     public function getContentsAsStream()
     {
-        $stream = @fopen(rawurldecode($this->resource), 'r');
+        $stream = @fopen($this->resource, 'r');
 
         if ($stream === false) {
-            throw new \RuntimeException('Unable to open stream resource for ' . rawurldecode($this->resource));
+            throw new \RuntimeException('Unable to open stream resource for ' . $this->resource);
         }
 
         $this->streams[] = $stream;

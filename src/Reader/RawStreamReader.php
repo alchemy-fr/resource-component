@@ -16,8 +16,14 @@ use Alchemy\Resource\ResourceReader;
 class RawStreamReader implements ResourceReader
 {
 
+    /**
+     * @var resource
+     */
     private $stream;
 
+    /**
+     * @param resource $resource
+     */
     public function __construct($resource)
     {
         if (!is_resource($resource)) {
@@ -25,14 +31,6 @@ class RawStreamReader implements ResourceReader
         }
 
         $this->stream = $resource;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContents()
-    {
-        return stream_get_contents($this->stream);
     }
 
     /**
