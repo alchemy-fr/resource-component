@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 /**
  * @param string|\Alchemy\Resource\ResourceUri $uri A valid resource URI instance or string.
  * @return \Alchemy\Resource\ResourceUri
