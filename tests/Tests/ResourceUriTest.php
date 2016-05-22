@@ -229,4 +229,25 @@ class ResourceUriTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('root://uri/child', (string) ResourceUri::fromString('root://uri')->child('child'));
         $this->assertEquals('root://uri/child', (string) ResourceUri::fromString('root://uri')->child('/child'));
     }
+
+    public function testGetPathReturnsEmptyStringForPathlessResources()
+    {
+        $uri = ResourceUri::fromString('mock://path-less');
+
+        $this->assertEquals('', $uri->getPath());
+    }
+
+    public function testGetPathReturnsRelativePath()
+    {
+        $uri = ResourceUri::fromString('mock://resource')->child('path');
+
+        $this->assertEquals('path', $uri->getPath());
+    }
+
+    public function testGetPathFromChainedResourceReturnsRelativePath()
+    {
+        $uri = ResourceUri::fromString('mock://resource')->child('path')->chain('chained');
+
+        $this->assertEquals('path', $uri->getPath());
+    }
 }

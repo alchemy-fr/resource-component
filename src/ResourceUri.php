@@ -185,6 +185,21 @@ final class ResourceUri
         return self::fromProtocolAndResource($this->protocol, $this->resource . '/' . ltrim($childRelativePath, '/'));
     }
 
+    public function getPath()
+    {
+        $resource = $this;
+
+        while ($resource->hasChainedResource()) {
+            $resource = $resource->getChainedResource();
+        }
+
+        if (false === $position = strrpos($resource->getResource(), '/')) {
+            return '';
+        }
+
+        return substr($resource->getResource(), $position + 1);
+    }
+
     /**
      * @return string
      */
