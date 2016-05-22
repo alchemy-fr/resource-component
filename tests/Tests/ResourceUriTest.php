@@ -210,6 +210,23 @@ class ResourceUriTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(\InvalidArgumentException::class);
 
-        $resources = array_values(ResourceUri::fromStringArray($uris));
+        array_values(ResourceUri::fromStringArray($uris));
+    }
+
+    public function testChainingWrapsUriInNewProtocol()
+    {
+        $uri = ResourceUri::fromString('nested://uri')->chain('wrapper');
+
+        $this->assertEquals('wrapper://nested://uri', (string) $uri);
+        $this->assertEquals('wrapper', $uri->getProtocol());
+        $this->assertEquals('nested://uri', $uri->getResource());
+        $this->assertTrue($uri->hasChainedResource(), 'Chained URI should report having a chained resource');
+        $this->assertEquals('nested://uri', (string) $uri->getChainedResource());
+    }
+
+    public function testCreatingChildAppendsRelativePathToUri()
+    {
+        $this->assertEquals('root://uri/child', (string) ResourceUri::fromString('root://uri')->child('child'));
+        $this->assertEquals('root://uri/child', (string) ResourceUri::fromString('root://uri')->child('/child'));
     }
 }

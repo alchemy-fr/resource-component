@@ -182,7 +182,7 @@ final class ResourceUri
 
     public function child($childRelativePath)
     {
-        return self::fromProtocolAndResource($this->protocol, $this->resource . '/' . $childRelativePath);
+        return self::fromProtocolAndResource($this->protocol, $this->resource . '/' . ltrim($childRelativePath, '/'));
     }
 
     /**
