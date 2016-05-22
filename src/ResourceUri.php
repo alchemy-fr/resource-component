@@ -175,6 +175,16 @@ final class ResourceUri
         return $this->getUri() == $other->getUri();
     }
 
+    public function chain($containerProtocol)
+    {
+        return self::fromProtocolAndResource($containerProtocol, (string) $this);
+    }
+
+    public function child($childRelativePath)
+    {
+        return self::fromProtocolAndResource($this->protocol, $this->resource . '/' . $childRelativePath);
+    }
+
     /**
      * @return string
      */

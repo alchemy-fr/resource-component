@@ -11,13 +11,20 @@
 
 namespace Alchemy\Resource\Metadata;
 
+use Alchemy\Resource\Reader\NullReader;
 use Alchemy\Resource\Resource;
 use Alchemy\Resource\ResourceReader;
 use Alchemy\Resource\ResourceUri;
 use Alchemy\Resource\ResourceWriter;
+use Alchemy\Resource\Writer\NullWriter;
 
 final class Metadata implements Resource
 {
+    /**
+     * @var MetadataIterator
+     */
+    private $metadataIterator;
+
     /**
      * @var ResourceUri
      */
@@ -35,12 +42,14 @@ final class Metadata implements Resource
 
     /**
      * @param ResourceUri $uri
+     * @param MetadataIterator $metadataIterator
      * @param string $name
      * @param mixed $value
      */
-    public function __construct(ResourceUri $uri, $name, $value)
+    public function __construct(ResourceUri $uri, MetadataIterator $metadataIterator, $name, $value)
     {
         $this->uri = $uri;
+        $this->metadataIterator = $metadataIterator;
         $this->name = (string) $name;
         $this->value = $value;
     }
@@ -74,7 +83,7 @@ final class Metadata implements Resource
      */
     public function getReader()
     {
-        throw new \BadMethodCallException();
+        return new NullReader();
     }
 
     /**
@@ -82,7 +91,7 @@ final class Metadata implements Resource
      */
     public function getWriter()
     {
-        throw new \BadMethodCallException();
+        return new NullWriter();
     }
 
     /**
@@ -90,6 +99,6 @@ final class Metadata implements Resource
      */
     public function getMetadata()
     {
-        throw new \BadMethodCallException();
+        return $this->metadataIterator;
     }
 }
